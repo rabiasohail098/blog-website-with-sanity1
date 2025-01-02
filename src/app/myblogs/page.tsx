@@ -1,5 +1,5 @@
 import BlogCard from "@/components/BlogCard";
-import { Card } from "../../sanity/lib/typings";
+import { Card } from "../../../typings";
 import { client } from "../../sanity/lib/client";
 
 export default async function Home() {
