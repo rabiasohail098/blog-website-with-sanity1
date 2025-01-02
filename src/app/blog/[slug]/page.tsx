@@ -1,13 +1,22 @@
+// app/blog/[slug]/page.tsx
+
 import Image from "next/image";
 import { client } from "../../../sanity/lib/client";
 import { PortableText } from "next-sanity";
-import { component } from "sanity/structure";
 import { Components } from "../../../components/customcomponent";
 
 type Post = {
   title: string;
   summary: string;
-  content: any;
+  content: Array<{
+    _key: string;
+    _type: string;
+    children: Array<{
+      _key: string;
+      _type: string;
+      text: string;
+    }>;
+  }>;
   image?: {
     asset: {
       url: string;
@@ -24,11 +33,9 @@ type Post = {
   };
 };
 
-export default async function BlogPost({ params: { slug } }: { params: { slug: string } }) {
-  if (!slug) {
-    return <div>Loading...</div>;
-  }
-
+// The `params` should be passed correctly here
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+  // Ensure the `slug` is correctly handled as a string
   const query = `*[_type=="blog" && slug.current == $slug][0]{
     title,
     summary,
@@ -49,34 +56,33 @@ export default async function BlogPost({ params: { slug } }: { params: { slug: s
     }
   }`;
 
-  const blog: Post | null = await client.fetch(query, { slug });
+  // Fetch the post using the `slug` parameter
+  const post: Post | null = await client.fetch(query, { slug: params.slug });
 
-  console.log("Fetched Blog Data:", blog);
-
-  if (!blog) {
+  if (!post) {
     return <div>Post not found!</div>;
   }
 
-  const imageUrl = blog.image?.asset?.url;
-  const imageUrl2 = blog.author?.image?.asset?.url;
+  const imageUrl = post.image?.asset?.url;
+  const imageUrl2 = post.author?.image?.asset?.url;
 
   return (
     <div>
       {/* Post Title */}
       <h1 className="text-xl sm:text-2xl text-center underline lg:text-3xl mb-4 text-blue-400 font-bold text-outline">
-        {blog.title}
+        {post.title}
       </h1>
 
       {/* Post Summary */}
       <p className="text-base text-outline text-center mb-8 sm:text-lg lg:text-xl text-amber-500 underline">
-        {blog.summary}
+        {post.summary}
       </p>
 
       {/* Post Image */}
       {imageUrl && (
         <Image
           src={imageUrl}
-          alt={`Image for ${blog.title}`}
+          alt={`Image for ${post.title}`}
           width={600}
           height={400}
           className="rounded-lg object-cover w-full h-[400px] mb-8"
@@ -88,7 +94,7 @@ export default async function BlogPost({ params: { slug } }: { params: { slug: s
         {imageUrl2 && (
           <Image
             src={imageUrl2}
-            alt={`Image of ${blog.author?.name}`}
+            alt={`Image of ${post.author?.name}`}
             width={100}
             height={100}
             className="rounded-full w-[200px] h-[200px]"
@@ -96,20 +102,20 @@ export default async function BlogPost({ params: { slug } }: { params: { slug: s
         )}
         <div>
           <h2 className="text-xl sm:text-2xl lg:text-3xl mb-4 text-blue-200 font-bold text-outline">
-            {blog.author?.name}
+            {post.author?.name}
           </h2>
           <p className="text-base text-outline sm:text-lg lg:text-xl text-gray-200 underline">
-            {blog.author?.bio}
+            {post.author?.bio}
           </p>
         </div>
       </div>
 
       {/* Blog Content */}
-      <section className="my-8 text-gray-100 px-8 py-4 ">
+      <section className="my-8 text-gray-100 px-8 py-4">
         <div className="space-y-4">
-          <PortableText value={blog.content} components={Components}/>
-  </div>
-</section>
+          <PortableText value={post.content} components={Components} />
+        </div>
+      </section>
     </div>
   );
 }

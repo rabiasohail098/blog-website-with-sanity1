@@ -22,11 +22,11 @@ const Hero = () => {
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-justify text-green-200 underline">
             Welcome to my tech blog! Stay updated with the latest trends, tutorials, and insights from the world of
-            technology. Whether you're a beginner or a pro, there's something here for everyone passionate about tech
+            technology. Whether you&apos;re a beginner or a pro, there&apos;s something here for everyone passionate about tech
             innovation.
           </p>
           <button className="block mx-auto md:ml-auto md:mr-auto p-2 text-lg mt-6 text-yellow-200 w-[120px] sm:w-[150px] border-2 rounded-lg transition-all duration-300">
-            <Link href="/myblogs">Let's Go</Link>
+            <Link href="/myblogs">Let&apos;s Go</Link>
           </button>
         </div>
       </div>

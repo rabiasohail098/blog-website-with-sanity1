@@ -38,7 +38,7 @@ const page = () => {
         
         <div className='md:w-1/2 w-full mt-12'> 
    
-        <p className='text-xl text-justify text-green-200 text-outline'>Our mission is to provide the best quality content to our readers. We aim to provide the latest trends, tutorials, and insights from the world of technology. Whether you&#39;re a beginner or a pro, there's something here for everyone passionate about tech innovation.</p>
+        <p className='text-xl text-justify text-green-200 text-outline'>Our mission is to provide the best quality content to our readers. We aim to provide the latest trends, tutorials, and insights from the world of technology. Whether you&#39;re a beginner or a pro, there&apos;s something here for everyone passionate about tech innovation.</p>
     </div>
     <div className='md:w-1/2 w-full md:px-16 px-8'>
         <Image src="/vi.png" alt="mission" width="300" height="300" className="rounded-lg  border-2 border-white w-[400px] h-[250px]"/>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center bg-dark text-white gap-6 px-4 py-6 md:py-4 container mx-auto">
+    <div className="flex flex-col md:flex-row justify-between items-center bg-dark text-white gap-6 px-8 py-6 md:py-4 ">
       {/* Copyright Section */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-center">
         <FaRegCopyright className="text-[20px]" />

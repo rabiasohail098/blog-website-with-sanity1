@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-
+import * as nodemailer from 'nodemailer';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { name, email, message } = req.body;
@@ -12,8 +12,8 @@ export default async function handler(req, res) {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: '', // Replace with your email
-          pass: '', // Replace with your email password or app-specific password
+          user: 'rabiasohail1209@gmail.com', // Replace with your email
+          pass: 'RabiaS0hail1209', // Replace with your email password or app-specific password
         },
       });
 

@@ -1,28 +1,37 @@
-const nodemailer = require("nodemailer");
+import nodemailer from 'nodemailer';  // Use ES6 import
 
-exports.handler = async (req, res) => {
-  const { name, email, message } = req.body;
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const { name, email, message } = req.body;
 
-  // Configure transport
-  const transporter = nodemailer.createTransport({
-    service: "gmail", // or your email provider
-    auth: {
-      user: "your_email@gmail.com",
-      pass: "your_email_password_or_app_password",
-    },
-  });
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'All fields are required.' });
+    }
 
-  try {
-    // Send email
-    await transporter.sendMail({
-      from: `"${name}" <${email}>`,
-      to: "rabiasohail1209@gmail.com",
-      subject: "Feedback from Tech Blog",
-      text: message,
-    });
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'rabiasohail1209@gmail.com', // Replace with your email
+          pass: 'RabiaS0hail1209', // Replace with your email password or app-specific password
+        },
+      });
 
-    return res.status(200).json({ success: true, message: "Email sent successfully!" });
-  } catch (error) {
-    return res.status(500).json({ success: false, error: error.message });
+      const mailOptions = {
+        from: email,
+        to: 'rabiasohail1209@gmail.com',
+        subject: `New Message from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      res.status(200).json({ success: 'Email sent successfully!' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to send email. Try again later.' });
+    }
+  } else {
+    res.status(405).json({ error: 'Method not allowed.' });
   }
-};
+}

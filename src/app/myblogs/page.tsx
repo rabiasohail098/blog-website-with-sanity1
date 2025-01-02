@@ -23,7 +23,7 @@ export default async function Home() {
       <h1 className="text-2xl text-center underline mb-6 text-blue-400 font-bold lg:text-4xl">
         MOST RECENT BLOGS
       </h1>
-      <section className="grid grid-cols-1 gap-6  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="grid grid-cols-1 gap-6  md:grid-cols-2 lg:grid-cols-3 ">
         {blogs.map((blog: Card) => (
           <BlogCard blog={blog} key={blog.slug} />
         ))}

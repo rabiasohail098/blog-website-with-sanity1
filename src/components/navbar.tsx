@@ -25,7 +25,7 @@ const Navbar = () => {
       </ul>
 
       {/* Mobile Navigation */}
-      <Sheet>
+      <Sheet >
         <SheetTrigger className="md:hidden text-orange-500">
           <MenuIcon size={24} />
         </SheetTrigger>
