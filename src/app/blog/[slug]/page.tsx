@@ -4,16 +4,22 @@ import { PortableText } from "next-sanity";
 import { Components } from "../../../components/customcomponent";
 
 // Correct typing for BlogPostProps
-interface BlogPostProps {
-  params: {
-    slug: string;
-  };
-}
+// interface BlogPostProps {
+//   params: {
+//     slug: string;
+//   };
+// }
 
 
 // Main Blog Post Component
-export default async function BlogPost({ params }: BlogPostProps) {
-  const query = `*[_type == "blog" && slug.current == $slug][0]{
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+  }) {
+  const slug = (await params).slug
+  console.log("slug: ", slug);
+  const query = `*[_type == "blog" && slug.current == "${slug}"][0]{
     title,
     summary,
     image {
@@ -34,7 +40,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
   }`;
 
   // Fetch the post data
-  const post = await client.fetch(query, { slug: params.slug });
+  const post = await client.fetch(query);
 
   if (!post) {
     return <div>Post not found!</div>;
@@ -57,13 +63,13 @@ export default async function BlogPost({ params }: BlogPostProps) {
           src={imageUrl}
           alt={post.title}
           width={800}
-          height={500}
-          className="my-4 rounded-lg"
+          height={300}
+          className="my-4 w-full h-[300px] rounded-lg"
         />
       )}
 
       {/* Author Section */}
-      <div className="flex gap-8 items-center my-8">
+      <div className="flex flex-col md:flex-row` gap-8 items-center my-8">
         {authorImage && (
           <Image
             src={authorImage}
